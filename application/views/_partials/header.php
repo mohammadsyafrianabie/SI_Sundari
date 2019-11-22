@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php if($title=='' || is_null($title) ) {echo "Sundari";} else{echo $title;}?></title>
+    <title>Rumah Makan Sundari</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">
