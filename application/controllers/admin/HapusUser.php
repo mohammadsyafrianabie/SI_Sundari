@@ -17,7 +17,7 @@ class HapusUser extends CI_Controller
 
 	public function confirm($id){
 		$this->ModelHapusUser->hapusUser($id);
-		redirect("admin/UbahUser");
+		redirect("admin/User");
 	}
 }
 ?>

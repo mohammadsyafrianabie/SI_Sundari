@@ -9,10 +9,10 @@ class UbahUser extends CI_Controller{
 	}
 
 	// Testing only
-	public function index(){
-		$data["user"] = $this->ModelUbahUser->getAllData();
-		$this->load->view("admin/user_test", $data);
-	}
+	// public function index(){
+	// 	$data["user"] = $this->ModelUbahUser->getAllData();
+	// 	$this->load->view("admin/user_test", $data);
+	// }
 
 	public function ubah($id){
 		$data["title"] = "Ubah User";
@@ -27,7 +27,8 @@ class UbahUser extends CI_Controller{
 				"field" => "id_user",
 				"label" => "Id User",
 				"rules" => "required"
-			),array(
+			),
+			array(
 				"field" => "nama",
 				"label" => "Nama",
 				"rules" => "required|min_length[4]|max_length[32]"
@@ -56,7 +57,7 @@ class UbahUser extends CI_Controller{
 			);
 
 			$this->ModelUbahUser->updateUser($id_user, $dataUpdate);
-			redirect(base_url("admin/UbahUser"));
+			redirect(base_url("admin/User"));
 		}
 
 	}

@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Rumah Makan Sundari</title>
+    <title><?php echo $title;?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">
