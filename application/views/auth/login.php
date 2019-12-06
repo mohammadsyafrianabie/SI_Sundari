@@ -20,7 +20,7 @@
                     </div>
                     <form class="user" method="POST" action="auth/konfirmasi">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id="nama" name="username" placeholder="Nama">
+                            <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama">
                             <div class="invalid-feedback">
                                 <?php echo form_error('nama');?>
                             </div>
@@ -34,13 +34,6 @@
                         <button type='submit' class="btn btn-primary btn-user btn-block">
                             Login
                         </button>
-                        <!-- <hr> -->
-                        <!-- <div class="text-center">
-                            <a class="small" href="forgot-password.html">Lupa Password?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" href="<?= base_url('auth/registration'); ?>">Daftar!</a>
-                        </div> -->
                     </form>
                 </div>
             </div>

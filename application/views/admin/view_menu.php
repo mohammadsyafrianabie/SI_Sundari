@@ -42,7 +42,7 @@
       <td><?php echo $u->harga ?></td>
       <td>
             <?php echo anchor('crud/edit/'.$u->id_menu,'Edit'); ?>
-                              <?php echo anchor('crud/hapus/'.$u->id_menu,'Hapus'); ?>
+                              <?php echo anchor('admin/HapusMenu/index/'.$u->id_menu,'Hapus'); ?>
       </td>
     </tr>
     <?php } ?>

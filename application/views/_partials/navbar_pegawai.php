@@ -19,7 +19,7 @@
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?php echo base_url('Auth/logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -32,13 +32,13 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="<?php if($formname == 'home') echo 'active';?>">
-                            <a href="<?php echo base_url('pegawai/home_pegawai');?>"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                            <a href="<?php echo base_url('pegawai/home_pegawai');?>"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li class="<?php if($formname == 'transaksi') echo 'active';?>">
-                            <a href="#"> Transaksi</a>
+                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Transaksi</a>
                         </li>
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
-                            <a href="<?php echo base_url('pegawai/Menu');?>"> Lihat Menu</a>
+                            <a href="<?php echo base_url('pegawai/Menu');?>"><i class="fa fa-tasks fa-fw"></i> Lihat Menu</a>
                         </li>
                     </ul>
                 </div>

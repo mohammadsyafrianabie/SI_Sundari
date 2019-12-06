@@ -20,7 +20,7 @@
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?php echo base_url('Auth/logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -33,16 +33,16 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="<?php if($formname == 'home') echo 'active';?>">
-                            <a href="<?php echo base_url('admin/home_admin');?>"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                            <a href="<?php echo base_url('admin/home_admin');?>"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li class="<?php if($formname == 'laporan') echo 'active';?>">
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Laporan Transaksi</a>
+                            <a href="#"><i class="fa fa-book fa-fw"></i> Laporan Transaksi</a>
                         </li>
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Menu</a>
                         </li>
                         <li class="<?php if($formname == 'user') echo 'active';?>">
-                            <a href="<?php echo base_url('admin/user');?>"><i class="fa fa-dashboard fa-fw"></i> User</a>
+                            <a href="<?php echo base_url('admin/user');?>"><i class="fa fa-users fa-fw"></i> User</a>
                         </li>
                         
                     </ul>
