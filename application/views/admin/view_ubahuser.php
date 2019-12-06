@@ -36,12 +36,14 @@
 					</div>
 					
 					<input class="btn btn-success" type="submit" value="Ubah">
-					<a class="btn btn-default" href="<?php echo base_url('admin/UbahUser');?>">Batal</a>
+					<a class="btn btn-default" href="<?php echo base_url('admin/User');?>">Batal</a>
 					<?php } ?>
 				</form>
 			</div>
 		</div>
 	</div>
+
 	<?php $this->load->view("_partials/footer"); ?>
+	
 </body>
 </html>
