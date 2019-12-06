@@ -18,6 +18,9 @@
                         <h1 class="page-header">Daftar Menu</h1>
                          <div class="card-body">
                   <table class="table">
+                  	  <div class="btn btn-primary active" type="submit" value="tambah">Tambah
+                                <div include="view/view_tambahmenu.php">
+                                	 <thead>
                                <tr>
                                  <th>ID</th>
                                  <th>Nama</th>
@@ -25,6 +28,7 @@
                                  <th>Stock</th>
                                  <th>Harga</th>
                                </tr>
+                                </thead>
                                <tbody id="view_menu">
                                </tbody>
                                <?php 
