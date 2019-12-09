@@ -39,7 +39,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i> Laporan Transaksi</a>
                         </li>
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Menu</a>
+                            <a href="<?php echo base_url('admin/Menu');?>"><i class="fa fa-table fa-fw"></i> Menu</a>
                         </li>
                         <li class="<?php if($formname == 'user') echo 'active';?>">
                             <a href="<?php echo base_url('admin/user');?>"><i class="fa fa-users fa-fw"></i> User</a>
