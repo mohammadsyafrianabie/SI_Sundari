@@ -15,8 +15,8 @@ class ModelUbahUser extends CI_Model{
 	}
 
 	// Testing purpose only
-	function getAllData(){
-		return $this->db->get($this->table)->result();
-	}
+	// function getAllData(){
+	// 	return $this->db->get($this->table)->result();
+	// }
 }
 ?>

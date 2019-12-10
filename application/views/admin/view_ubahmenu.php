@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
-				<form action="<?php echo base_url('admin/UbahUser/confirm')?>" method="POST">
+				<form action="<?php echo base_url('admin/UbahMenu/confirm')?>" method="POST">
 					<?php foreach($menurow as $mr){?>
 					<div class="form-group">
 						<label for="id_menu">Id Menu</label>
@@ -35,10 +35,10 @@
 			            </div>
 					</div>
 					<div class="form-group">
-						<label for="stok">Stok</label>
-						<input class="form-control <?php echo form_error('stok') ? 'is-invalid':''?>" type="text" name="stok" value="<?php echo $mr->stok?>">
+						<label for="harga">Harga</label>
+						<input class="form-control <?php echo form_error('harga') ? 'is-invalid':''?>" type="text" name="harga" value="<?php echo $mr->harga?>">
 						<div class="invalid-feedback">
-			                <?php echo form_error('stok');?>
+			                <?php echo form_error('harga');?>
 			            </div>
 					</div>
 					

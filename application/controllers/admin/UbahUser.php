@@ -8,12 +8,6 @@ class UbahUser extends CI_Controller{
 		$this->load->model("ModelUbahUser");
 	}
 
-	// Testing only
-	// public function index(){
-	// 	$data["user"] = $this->ModelUbahUser->getAllData();
-	// 	$this->load->view("admin/user_test", $data);
-	// }
-
 	public function ubah($id){
 		$data["title"] = "Ubah User";
 		$data["userrow"] = $this->ModelUbahUser->getDataById($id);

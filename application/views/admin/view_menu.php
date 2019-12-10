@@ -41,7 +41,10 @@
       <td><?php echo $u->stok ?></td>
       <td><?php echo $u->harga ?></td>
       <td>
+<<<<<<< HEAD
         
+=======
+>>>>>>> bd519d3ebbc69bf3ea97c4e3339e66d0c28845b1
             <?php echo anchor('admin/UbahMenu/ubah/'.$u->id_menu,'Edit'); ?>
                               <?php echo anchor('admin/HapusMenu/index/'.$u->id_menu,'Hapus'); ?>
       </td>
