@@ -8,37 +8,39 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <form action="<?php echo base_url('admin/tambahstok/confirm') ?>" method="POST">
+                <form action="<?php echo base_url('admin/tambahstok/save') ?>" method="POST">
                     <?php foreach ($tambahstokrow as $us) { ?>
                         <div class="form-group">
-                            <label for="id_stok">Id Stok</label>
-                            <input class="form-control <?php echo form_error('id_stok') ? 'is-invalid' : '' ?>" type="text" name="id_stok" value="<?php echo $us->id_stok ?>" readonly>
-                            <div class="invalid-feedback">
-                                <?php echo form_error('id_stok'); ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_menu">Id menu</label>
-                            <select class="form-control <?php echo form_error('id_menu') ? 'is-invalid' : '' ?>" name="id_menu">
-                                <option value="ayam a" <?php if ($us->menu == 'ayam a') echo 'selected'; ?>>ayam a</option>
-                                <option value="ayam b" <?php if ($us->menu == 'ayam b') echo 'selected'; ?>>ayam b</option>
-                            </select>
+                            <label for="id_menu">Id Menu</label>
+                            <input class="form-control <?php echo form_error('id_menu') ? 'is-invalid' : '' ?>" type="text" name="id_menu" value="<?php echo $us->id_menu ?>" readonly>
                             <div class="invalid-feedback">
                                 <?php echo form_error('id_menu'); ?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal">Tanggal</label>
-                            <input class="form-control <?php echo form_error('tanggal') ? 'is-invalid' : '' ?>" type="text" name="tanggal" value="<?php echo $us->tanggal ?>">
+                            <label for="id_menu">Id menu</label>
+                            <input type="text" name="nama" id="nama" class="form-control" value="<?php echo $us->nama ?>" readonly>
+                            <!-- <select class="form-control <?php echo form_error('id_menu') ? 'is-invalid' : '' ?>" name="id_menu"> -->
+                                <!-- <option><?php echo $us->nama ?></option> -->
+                                <!-- <option value="ayam a" <?php if ($us->menu == 'ayam a') echo 'selected'; ?>>ayam a</option>
+                                <option value="ayam b" <?php if ($us->menu == 'ayam b') echo 'selected'; ?>>ayam b</option> -->
+                            <!-- </select> -->
                             <div class="invalid-feedback">
-                                <?php echo form_error('tanggal'); ?>
+                                <?php echo form_error('id_menu'); ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipe">Tipe</label>
+                            <input class="form-control <?php echo form_error('tipe') ? 'is-invalid' : '' ?>" type="text" name="tipe" value="<?php echo $us->tipe ?>" readonly>
+                            <div class="invalid-feedback">
+                                <?php echo form_error('tipe'); ?>
                             </div>
 
                              <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
-                            <input class="form-control <?php echo form_error('jumlah') ? 'is-invalid' : '' ?>" type="text" name="jumlah" value="<?php echo $us->jumlah ?>">
+                            <label for="stok">Jumlah</label>
+                            <input class="form-control <?php echo form_error('stok') ? 'is-invalid' : '' ?>" type="number" name="stok" id="stok" min="0">
                             <div class="invalid-feedback">
-                                <?php echo form_error('jumlah'); ?>
+                                <?php echo form_error('stok'); ?>
                             </div>
 
 
