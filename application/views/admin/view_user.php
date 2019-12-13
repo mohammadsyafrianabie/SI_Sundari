@@ -20,8 +20,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
+                        <a href="<?php echo base_url('admin/TambahUser');?>" class="btn btn-primary active">Tambah</a>
                         <table class="table">
-                            <div class="btn btn-primary active" type="submit" value="tambah">Tambah
                                 <div include="view/view_tambahuser.php">
                                     <thead>
                                         <tr>

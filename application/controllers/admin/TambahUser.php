@@ -8,57 +8,35 @@ class TambahUser extends CI_Controller{
 		$this->load->model("ModelTambahUser");
 	}
 
-	// Testing only
-	// public function index(){
-	// 	$data["user"] = $this->ModelTambahUser->getAllData();
-	// 	$this->load->view("admin/user_test", $data);
-	// }
-
-	public function Tambah($id){
+	public function index(){
 		$data["title"] = "Tambah User";
-		$data["userrow"] = $this->ModelTambahUser->getDataById($id);
+		$data["id_baru_user"] = $this->trimming();
 		$this->load->view("admin/view_tambahuser", $data);
 	}
 
-	public function confirm(){
-
-		$rule_TambahUser = array(
-			array(
-				"field" => "id_user",
-				"label" => "Id User",
-				"rules" => "required"
-			),
-			array(
-				"field" => "nama",
-				"label" => "Nama",
-				"rules" => "required|min_length[4]|max_length[32]"
-			),
-			array(
-				"field" => "hak_akses",
-				"label" => "Hak Akses",
-				"rules" => "required"
-			)
-		);
-		$this->form_validation->set_rules($rule_TambahUser);
-
-		if ($this->form_validation->run() == FALSE) {
-			$data["title"] = "Tambah User";
-			$data["userrow"] = $this->ModelTambahUser->getDataById($this->input->post("id_user"));
-			$this->load->view("admin/view_Tambahuser", $data);
-		}else{
-			$id_user = $this->input->post("id_user");
-			$nama = $this->input->post("nama");
-			$hak_akses = $this->input->post("hak_akses");
-
-			$dataUpdate = array(
-				"id_user" => $id_user,
-				"nama" => $nama,
-				"hak_akses" => $hak_akses
+	public function tambahUser(){
+		$id_user = $this->input->post('id_user');
+		$nama = $this->input->post('nama');
+		$password = $this->input->post('password');
+		$hak_akses = $this->input->post('hak_akses');
+ 
+		$data = array(
+			'id_user' => $id_user,
+			'nama' => $nama,
+			'password' => $password,
+			'hak_akses' => $hak_akses
 			);
+		$this->ModelTambahUser->tambahUser($data,'user');
+		redirect('admin/user');
+	}
 
-			$this->ModelTambahUser->updateUser($id_user, $dataUpdate);
-			redirect(base_url("admin/User"));
-		}
-
+	public function trimming(){
+		$last_id = $this->ModelTambahUser->getLastId();
+		$len = strlen($last_id);
+		$get_left = substr($last_id, 0, 1);
+		$get_right = substr($last_id, 1, $len);
+		$new_number = intval($get_right) + 1;
+		$new_id = $get_left. sprintf("%03d", $new_number);
+		return $new_id;
 	}
 }

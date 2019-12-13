@@ -5,21 +5,21 @@ class ModelTambahUser extends CI_Model
 {
     private $table = "user";
 
-    function tambahUser($id, $data)
+    function tambahUser($datauser)
     {
-        $this->db->insert("id_user", $id);
-        $this->db->query($this->table, $data);
+        $this->db->insert($this->table, $datauser);
     }
 
-    function getDataById($id)
-    {
-        $this->db->where("id_user", $id);
-        return $this->db->get($this->table)->result();
+    function getLastId(){
+        $rows = $this->db->get($this->table)->result();
+        foreach ($rows as $rw) {
+            $tmp = $rw->id_user;
+        }
+        if (is_null($tmp)) {
+            return $tmp = "u000";
+        }else{
+            return $tmp;
+        }
     }
 
-    // Testing purpose only
-    function getAllData()
-    {
-        return $this->db->get($this->table)->result();
-    }
 }
