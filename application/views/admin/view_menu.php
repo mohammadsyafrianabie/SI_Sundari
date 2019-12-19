@@ -17,9 +17,9 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Daftar Menu</h1>
                          <div class="card-body">
+                        <a href="<?php echo base_url('admin/TambahMenu');?>" class="btn btn-primary active">Tambah</a>
                   <table class="table">
-                  	  <div class="btn btn-primary active" type="submit" value="tambah">Tambah
-                                <div include="view/view_tambahmenu.php">
+                    <div include="view/view_tambahmenu.php">
                                 	 <thead>
                                <tr>
                                  <th>ID</th>
