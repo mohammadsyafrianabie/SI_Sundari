@@ -35,7 +35,7 @@
                             <a href="<?php echo base_url('pegawai/home_pegawai');?>"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li class="<?php if($formname == 'transaksi') echo 'active';?>">
-                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Transaksi</a>
+                            <a href="<?php echo base_url('pegawai/Transaksi');?>"><i class="fa fa-shopping-cart fa-fw"></i> Transaksi</a>
                         </li>
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
                             <a href="<?php echo base_url('pegawai/Menu');?>"><i class="fa fa-tasks fa-fw"></i> Lihat Menu</a>

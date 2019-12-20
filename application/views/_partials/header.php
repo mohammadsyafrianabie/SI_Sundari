@@ -20,4 +20,8 @@
     <!-- Custom Fonts -->
     <link href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet" type="text/css">
 
+    <link href="<?php echo base_url('assets/vendor/select2/css/select2.css'); ?>" rel="stylesheet" type="text/css">
+
+    <link href="<?php echo base_url('assets/vendor/select2/css/select2.min.css'); ?>" rel="stylesheet" type="text/css">
+
 </head>

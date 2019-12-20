@@ -73,6 +73,9 @@ class Auth extends CI_Controller
 
                         // Buat session & Menuju pegawai
                         $this->session->set_userdata("hak_akses", $getHakAkses);
+
+                        // Untuk array transaksi
+                        $this->session->set_userdata("data_beli", array());
                         redirect("pegawai/home_pegawai");
                     }
 

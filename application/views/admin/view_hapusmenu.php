@@ -12,7 +12,7 @@
 				<h1>Hapus Data</h1>
 				<p>Yakin untuk menghapus <font color="red">ID: <?php echo $hs->id_menu;?></font> ?</p>
 				<a class="btn btn-danger" href="<?php echo base_url('admin/HapusMenu/confirm/'). $hs->id_menu;?>">Hapus</a>
-				<a class="btn btn-default" href="<?php echo base_url('admin/UbahMenu');?>">Batal</a>
+				<a class="btn btn-default" href="<?php echo base_url('admin/Menu');?>">Batal</a>
 				<?php }?>
 			</div>
 		</div>
