@@ -17,7 +17,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Daftar Menu</h1>
                         <div class="card-body">
-                            <a class="btn btn-primary" href="#">Tambah</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('admin/TambahMenu'); ?>">Tambah</a>
                             <table class="table">
                                 <thead>
                                     <tr>

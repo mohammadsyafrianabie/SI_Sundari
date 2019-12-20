@@ -34,7 +34,7 @@
                         </div>
 
                         <input class="btn btn-success" type="submit" value="Tambah">
-                        <a class="btn btn-back" href="<?php echo base_url('admin/TambahMenu'); ?>">Batal</a>
+                        <a class="btn btn-secondary" href="<?php echo base_url('admin/Menu'); ?>">Batal</a>
                 </form>
             </div>
         </div>

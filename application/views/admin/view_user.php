@@ -20,7 +20,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <a href="<?php echo base_url('admin/TambahUser');?>" class="btn btn-primary active">Tambah</a>
+                        <a href="<?php echo base_url('admin/TambahUser');?>" class="btn btn-primary">Tambah</a>
                         <table class="table">
                             <thead>
                                 <tr>
