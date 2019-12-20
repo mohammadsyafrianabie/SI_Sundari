@@ -1,7 +1,7 @@
 <?php
 defined("BASEPATH") or exit("No direct access allowed");
 
-class tambahstok extends CI_Controller{
+class Tambahstok extends CI_Controller{
 	
 	function __construct(){
 		parent::__construct();
@@ -20,12 +20,26 @@ class tambahstok extends CI_Controller{
 		$this->load->view("admin/view_tambahstok", $data);
 	}
 
+	public function save(){
+
+		$id_menu 	= $this->input->post("id_menu");
+		$stok 		= $this->input->post("stok");
+		$query 		= $this->Modeltambahstok->getDataById($id_menu);
+		foreach ($query as $key) {
+			# code...
+			$jumlah_stok = $key->stok + $stok;
+		}
+		$this->Modeltambahstok->save($id_menu, $jumlah_stok);
+		redirect("admin/menu");
+
+	}
+
 	public function confirm(){
 
 		$rule_tambahstok = array(
 			array(
 				"field" => "id_stok",
-				"label" => "Id stok",
+				"label" => "Id_stok",
 				"rules" => "required"
 			),
 			array(
@@ -34,16 +48,17 @@ class tambahstok extends CI_Controller{
 				"rules" => "required"
 			),
 			array(
-				"field" => "tanggal",
-				"label" => "Tanggal",
+				"field" => "tipe",
+				"label" => "tipe",
 				"rules" => "required"
 			),
 			array(
-				"field" => "jumlah",
-				"label" => "Jumlah",
+				"field" => "stok",
+				"label" => "stok",
 				"rules" => "required"
 			)
 		);
+
 		$this->form_validation->set_rules($rule_tambahstok);
 
 		if ($this->form_validation->run() == FALSE) {
@@ -53,15 +68,14 @@ class tambahstok extends CI_Controller{
 		}else{
 			$id_stok = $this->input->post("id_stok");
 			$id_menu = $this->input->post("id_menu");
-			$tanggal = $this->input->post("tanggal");
-			$jumlah = $this->input->post("jumlah");
-
+			$tipe = $this->input->post("tipe");
+			$stok = $this->input->post("stok");
 
 			$dataUpdate = array(
 				"id_stok" => $id_stok,
 				"id_menu" => $id_menu,
-				"tanggal" => $tanggal,
-				"Jumlah" => $jumlah
+				"tipe" => $tipe,
+				"stok" => $stok
 			);
 
 			$this->Modeltambahstok->updatestok($id_stok, $dataUpdate);
