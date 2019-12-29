@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+ <?php $this->load->view('_partials/header') ?>
 
- <div class="all-content-wrapper">
-        <?php $this->load->view('_partials/header') ?>
+<body>
+  <div id="wrapper">
 
-        <div class="content">
-
+        <!-- Navigation -->
+        <?php $this->load->view("_partials/navbar_admin"); ?>
+ <div id="page-wrapper">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <h1 class="page-header">Laporan Harian</h1>
+                         <div class="card-body">
         <form method="post" action="<?php echo base_url('admin/Laporan/hari');$total_uang = 0; ?>">
         <!-- DataTables -->
         <div class="card mb-3">
@@ -99,7 +105,7 @@
           </div>
         </div>
       </div>
-
+</div>
 
     </div>
 
