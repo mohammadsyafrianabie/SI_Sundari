@@ -36,7 +36,18 @@
                             <a href="<?php echo base_url('admin/home_admin');?>"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li class="<?php if($formname == 'laporan') echo 'active';?>">
-                            <a href="#"><i class="fa fa-book fa-fw"></i> Laporan Transaksi</a>
+                            <a href="#"><i class="fa fa-book fa-fw"></i> Laporan Transaksi<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url("admin/Laporan/hari"); ?>">Harian</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url("admin/Laporan/bulan"); ?>">Bulanan</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url("admin/Laporan/tahun"); ?>">Tahunan</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
                             <a href="<?php echo base_url('admin/Menu');?>"><i class="fa fa-table fa-fw"></i> Menu</a>

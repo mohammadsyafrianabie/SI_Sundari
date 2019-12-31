@@ -13,79 +13,54 @@ class Transaksi extends CI_Controller {
 
 		$data['data_beli'] = $this->session->userdata("data_beli");
 		$data['lookMenu'] = $this->ModelTransaksi->lookMenu();
-		$data['table_size'] = $this->getSize();
+		$data['table_size'] = $this->ModelTransaksi->getSize();
 		$data["title"] = "Transaksi - SI Sundari";
 		$data["formname"] = "transaksi";
 
 		$this->load->view('pegawai/view_transaksi', $data);
 	}
 
-	private function getSize(){
-		// Ambil ukuran tabel(array) dalam session
-		$tmp = $this->session->userdata("data_beli");
-		return count($tmp);
-	}
-
-	private function getIndex($no){
-		// Sebelum mengubah atau menghapus, maka harus mencari indexnya (dalam array yang disimpan di session) terlebih dahulu
-		$tmp = $this->session->userdata("data_beli");
-		foreach ($tmp as $key => $val) {
-			if($val["no_beli"]==$no){
-				return $key;
-			}
+	// Untuk ajax getHarga
+	public function getHargaMenu(){
+		$id = $this->input->get("id");
+		$menu = $this->ModelTransaksi->getMenuById($id);
+		$data = "";
+		foreach($menu as $m){
+			$data = $m->harga;
 		}
-		return null;
+		echo $data;
 	}
 
-	/*
-	Semua fungsi yang hanya menggunakan session
-	1. addData
-	2. updataData
-	3. deleteData
-	4. addRow
-	5. updateRow
-	6. deleteRow
-	*/
-
-	private function addData($idMenu, $jumlahBeli, $harga){
-		// Tampung sementara isi tabel
-		$tmp = $this->session->userdata("data_beli");
-		$new_id = count($tmp) + 1;
-		array_push($tmp, array("no_beli" => $new_id, "idMenu" => $idMenu, "jumlahBeli" => $jumlahBeli, "harga" => $harga));
-		// Simpan kembali ke session
-		$this->session->set_userdata("data_beli", $tmp);
-	}
-
-	private function updateData($no, $idRuang, $idPelajaran, $hari, $jamMulai){
-		/*
-		TODO updatedata
-		1. Get id atau $no
-		2. Search index
-		3. datalist[index] = array(new_data)
-		4. save to session
-		*/
-		$tmp = $this->session->userdata("data_beli");
-		$id = $this->getIndex($no);
-		$tmp[$id] = array("no_beli" => $no, );
-		// Simpan kembali ke session
-		$this->session->set_userdata("data_beli", $tmp);
-
-	}
-
-	private function deleteData($no){
-		$tmp = $this->session->userdata("data_beli");
-		$id =  $this->getIndex($no);
-		unset($tmp[$id]);
-		$this->session->set_userdata("data_beli", $tmp);
+	// Untuk melihat jumlah stok menu
+	private function getStokMenu($id){
+		$menu = $this->ModelTransaksi->getMenuById($id);
+		$tmp = "";
+		foreach ($menu as $m) {
+			$tmp = $m->stok;
+		}
+		return $tmp;
 	}
 
 	public function addRow(){
 		// Buat baris baru pada form
+		// Ambil input
 		$my_idMenu = $this->input->post("id_menu");
 		$my_jumlahBeli = $this->input->post("jumlah_beli");
 		$my_harga = $this->input->post("harga");
-		$this->addData($my_idMenu, $my_jumlahBeli, $my_harga);
-		redirect(base_url("pegawai/Transaksi"));
+		$namaMenu = $this->ModelTransaksi->getNamaMenu($my_idMenu);
+
+		// Cek persediaan dan Isi session
+		if($this->getStokMenu($my_idMenu) < $my_jumlahBeli){
+			?>
+				<script>
+					alert("Stok kurang dari <?php echo $my_jumlahBeli; ?>"); 
+					window.location.href = "<?php echo base_url("pegawai/Transaksi"); ?>";
+				</script>
+			<?php
+		}else{
+			$this->ModelTransaksi->addData($my_idMenu, $my_jumlahBeli, $my_harga, $namaMenu);
+			redirect(base_url("pegawai/Transaksi"));
+		}
 	}
 
 	public function updateRow(){
@@ -93,20 +68,19 @@ class Transaksi extends CI_Controller {
 		$my_id = $this->input->post("id_transaksi");
 		
 		// echo $my_id. " ". $my_ruangan. " ". $my_pelajaran. " ". $my_hari. " ". $my_jam;
-		$this->updateData($my_id, $my_ruangan, $my_pelajaran, $my_hari, $my_jam);
+		$this->ModelTransaksi->updateData($my_idMenu, $my_jumlahBeli, $my_harga, $namaMenu);
 		redirect(base_url("pegawai/Transaksi"));
 	}
 
 	public function deleteRow($no){
-		$this->deleteData($no);
+		$this->ModelTransaksi->deleteData($no);
 		redirect(base_url("pegawai/Transaksi"));
 	}
 
+
 	public function save(){
 		// Simpan kedalam database
-		$my_kelas = $this->input->post("kelas");
-		$my_tahunAjar = $this->input->post("tahun_ajaran");
-		$my_semester = $this->input->post("semester");
+		// TODO ambil tanggal dan jam beli
 
 		$tmp = $this->session->userdata("data_beli");
 		$last = $this->ModelTransaksi->getLastTransaksi();
@@ -123,9 +97,10 @@ class Transaksi extends CI_Controller {
 			$last = $last + 1;
 			$this->ModelTransaksi->addTransaksi("transaksi", $data);
 		}
-		$this->session->set_userdata("data_beli", array());
+		// TODO jika sudah insert ke database langsung menuju nota beli 
+		//$this->session->set_userdata("data_beli", array());
 		// echo "Selesai". "<a href='". base_url("admin/Jadwal"). "'> Klik disini </a>";
-		redirect(base_url("admin/Jadwal"));
+		redirect(base_url("pegawai/Transaksi"));
 	}
 
 }

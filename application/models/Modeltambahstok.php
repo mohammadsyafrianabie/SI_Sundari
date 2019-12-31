@@ -2,22 +2,31 @@
 defined("BASEPATH") or exit("No direct access allowed");
 
 class Modeltambahstok extends CI_Model{
-	private $table = "menu";
+	private $table = "tambah_stok";
 
-	public function tambahstok($id){
-		$this->db->where("id_menu", $id);
-		$this->db->delete($this->table);
+	function tambahstok($data){
+		$this->db->insert($this->table, $data);
+		$this->ubahStokMenu($data["id_menu"], $data["jumlah"]);
 	}
 
-	public function getDataById($id){
-		$this->db->where("id_menu", $id);
-		return $this->db->get($this->table)->result();
+	function ubahStokMenu($id_menu, $jumlah){
+		// Update tambah
+		$this->db->query("UPDATE menu SET stok=stok+". $jumlah. " WHERE id_menu='". $id_menu. "'");
 	}
 
-	function save($id_menu, $jumlah_stok)
-	{
-		$this->db->where("id_menu", $id_menu);
-		$this->db->update($this->table, array('stok' => $jumlah_stok ));
+	function getLastId(){
+		$rows = $this->db->get($this->table)->result();
+		$tmp = "";
+		foreach ($rows as $rw) {
+			// Harus diubah
+			$tmp = $rw->id_stok;
+		}
+		if (is_null($tmp)) {
+			// Harus diubah
+			return $tmp = "s000";
+		}else{
+			return $tmp;
+		}
 	}
 }
 ?>

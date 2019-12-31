@@ -8,30 +8,22 @@ class Tambahstok extends CI_Controller{
 		$this->load->model("Modeltambahstok");
 	}
 
-	// Testing only
-	// public function index(){
-	// 	$data["tambah_stok"] = $this->Modeltambahstok->getAllData();
-	// 	$this->load->view("admin/tambahstok_test", $data);
-	// }
-
-	public function tambah($id){
-		$data["title"] = "tambah_stok";
-		$data["tambahstokrow"] = $this->Modeltambahstok->getDataById($id);
+	public function index($id){
+		// $id untuk menu yang dipilih
+		$data["title"] = "Tambah Stok";
+		$data["id_menu"] = $id;
+		$data["id_stok"] = $this->trimming();
 		$this->load->view("admin/view_tambahstok", $data);
 	}
 
-	public function save(){
-
-		$id_menu 	= $this->input->post("id_menu");
-		$stok 		= $this->input->post("stok");
-		$query 		= $this->Modeltambahstok->getDataById($id_menu);
-		foreach ($query as $key) {
-			# code...
-			$jumlah_stok = $key->stok + $stok;
-		}
-		$this->Modeltambahstok->save($id_menu, $jumlah_stok);
-		redirect("admin/menu");
-
+	public function trimming(){
+		$last_id = $this->Modeltambahstok->getLastId();
+		$len = strlen($last_id);
+		$get_left = substr($last_id, 0, 1);
+		$get_right = substr($last_id, 1, $len);
+		$new_number = intval($get_right) + 1;
+		$new_id = $get_left. sprintf("%03d", $new_number);
+		return $new_id;
 	}
 
 	public function confirm(){
@@ -48,38 +40,39 @@ class Tambahstok extends CI_Controller{
 				"rules" => "required"
 			),
 			array(
-				"field" => "tipe",
-				"label" => "tipe",
+				"field" => "tanggal",
+				"label" => "Tanggal",
 				"rules" => "required"
 			),
 			array(
-				"field" => "stok",
-				"label" => "stok",
-				"rules" => "required"
+				"field" => "jumlah",
+				"label" => "jumlah",
+				"rules" => "required|numeric"
 			)
 		);
 
 		$this->form_validation->set_rules($rule_tambahstok);
 
 		if ($this->form_validation->run() == FALSE) {
-			$data["title"] = "tambahstok";
-			$data["tambahstokrow"] = $this->Modeltambahstok->getDataById($this->input->post("id_stok"));
+			$data["title"] = "Tambah Stok";
+			$data["id_stok"] = $this->input->post("id_stok");
+			$data["id_menu"] = $this->input->post("id_menu");
 			$this->load->view("admin/view_tambahstok", $data);
 		}else{
 			$id_stok = $this->input->post("id_stok");
 			$id_menu = $this->input->post("id_menu");
-			$tipe = $this->input->post("tipe");
-			$stok = $this->input->post("stok");
+			$tanggal = $this->input->post("tanggal");
+			$jumlah = $this->input->post("jumlah");
 
-			$dataUpdate = array(
+			$dataTambah = array(
 				"id_stok" => $id_stok,
 				"id_menu" => $id_menu,
-				"tipe" => $tipe,
-				"stok" => $stok
+				"tanggal" => $tanggal,
+				"jumlah" => $jumlah
 			);
 
-			$this->Modeltambahstok->updatestok($id_stok, $dataUpdate);
-			redirect(base_url("admin/tambahstok"));
+			$this->Modeltambahstok->tambahstok($dataTambah);
+			redirect(base_url("admin/Menu"));
 		}
 
 	}

@@ -8,52 +8,62 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <form action="<?php echo base_url('admin/tambahstok/save') ?>" method="POST">
-                    <?php foreach ($tambahstokrow as $us) { ?>
-                        <div class="form-group">
-                            <label for="id_menu">Id Menu</label>
-                            <input class="form-control <?php echo form_error('id_menu') ? 'is-invalid' : '' ?>" type="text" name="id_menu" value="<?php echo $us->id_menu ?>" readonly>
-                            <div class="invalid-feedback">
-                                <?php echo form_error('id_menu'); ?>
-                            </div>
+                <form action="<?php echo base_url('admin/tambahstok/confirm') ?>" method="POST">
+                    <div class="form-group">
+                        <label for="id_stok">Id Stok</label>
+                        <input class="form-control <?php echo form_error('id_stok') ? 'is-invalid' : '' ?>" type="text" name="id_stok" value="<?php echo $id_stok; ?>" readonly>
+                        <div class="invalid-feedback">
+                            <?php echo form_error('id_stok'); ?>
                         </div>
-                        <div class="form-group">
-                            <label for="id_menu">Id menu</label>
-                            <input type="text" name="nama" id="nama" class="form-control" value="<?php echo $us->nama ?>" readonly>
-                            <!-- <select class="form-control <?php echo form_error('id_menu') ? 'is-invalid' : '' ?>" name="id_menu"> -->
-                                <!-- <option><?php echo $us->nama ?></option> -->
-                                <!-- <option value="ayam a" <?php if ($us->menu == 'ayam a') echo 'selected'; ?>>ayam a</option>
-                                <option value="ayam b" <?php if ($us->menu == 'ayam b') echo 'selected'; ?>>ayam b</option> -->
-                            <!-- </select> -->
-                            <div class="invalid-feedback">
-                                <?php echo form_error('id_menu'); ?>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_menu">Id menu</label>
+                        <input type="text" name="id_menu" id="id_menu" class="form-control" value="<?php echo $id_menu; ?>" readonly>
+                        <div class="invalid-feedback">
+                            <?php echo form_error('id_menu'); ?>
                         </div>
-                        <div class="form-group">
-                            <label for="tipe">Tipe</label>
-                            <input class="form-control <?php echo form_error('tipe') ? 'is-invalid' : '' ?>" type="text" name="tipe" value="<?php echo $us->tipe ?>" readonly>
-                            <div class="invalid-feedback">
-                                <?php echo form_error('tipe'); ?>
-                            </div>
-
-                             <div class="form-group">
-                            <label for="stok">Jumlah</label>
-                            <input class="form-control <?php echo form_error('stok') ? 'is-invalid' : '' ?>" type="number" name="stok" id="stok" min="0">
-                            <div class="invalid-feedback">
-                                <?php echo form_error('stok'); ?>
-                            </div>
-
-
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal</label>
+                        <input class="form-control <?php echo form_error('tanggal') ? 'is-invalid' : '' ?>" type="text" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d H:m:s');?>" readonly>
+                        <div class="invalid-feedback">
+                            <?php echo form_error('tanggal'); ?>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+                        <input class="form-control <?php echo form_error('jumlah') ? 'is-invalid' : '' ?>" type="number" name="jumlah" id="jumlah" onchange="notNeg()" onkeyup="notNeg()" value="0">
+                        <div class="invalid-feedback">
+                            <?php echo form_error('jumlah'); ?>
+                        </div>
+                    </div>
 
-                        <input class="btn btn-success" type="submit" value="tambah">
-                        <a class="btn btn-back" href="<?php echo base_url('admin/tambahstok'); ?>">Batal</a>
-                    <?php } ?>
+                    <input class="btn btn-success" type="submit" id="tambah" value="Tambah">
+                    <a class="btn btn-back" href="<?php echo base_url('admin/Menu'); ?>">Batal</a>
                 </form>
             </div>
         </div>
     </div>
     <?php $this->load->view("_partials/footer"); ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#tambah").prop("disabled", true);
+        });
+        function notNeg(){
+            var jumlah = $("#jumlah").val();
+            if(jumlah > 0){
+                $("#tambah").prop("disabled", false);
+            }else{
+                $("#tambah").prop("disabled", true);
+            }
+            konfirmasi();
+        }
+        function konfirmasi(){
+            if ($("#jumlah").val() < 0) {
+                $("#jumlah").val(0);
+            }
+        }
+    </script>
 </body>
 
 </html>

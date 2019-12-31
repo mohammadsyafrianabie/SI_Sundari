@@ -18,12 +18,12 @@ class Auth extends CI_Controller
     public function konfirmasi(){
     	$login_rules = array(
     		array(
-    			"field" => "nama",
+    			"field" => "nama_sundari",
     			"label" => "Nama",
     			"rules" => "required"
     		),
     		array(
-    			"field" => "password",
+    			"field" => "password_sundari",
     			"label" => "Password",
     			"rules" => "required|min_length[8]|max_length[32]"
     		)
@@ -37,8 +37,8 @@ class Auth extends CI_Controller
     		$this->load->view("auth/login", $data);
 
     	} else {
-    		$nama = $this->input->post("nama");
-	        $password = $this->input->post("password");
+    		$nama = $this->input->post("nama_sundari");
+	        $password = $this->input->post("password_sundari");
 
             // Ambil data dari database
             $row = $this->ModelAuth->getDataByNama($nama);
@@ -74,7 +74,7 @@ class Auth extends CI_Controller
                         // Buat session & Menuju pegawai
                         $this->session->set_userdata("hak_akses", $getHakAkses);
 
-                        // Untuk array transaksi
+                        // Untuk session array transaksi
                         $this->session->set_userdata("data_beli", array());
                         redirect("pegawai/home_pegawai");
                     }

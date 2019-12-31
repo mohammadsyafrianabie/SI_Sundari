@@ -20,13 +20,13 @@
                     </div>
                     <form class="user" method="POST" action="auth/konfirmasi">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama">
+                            <input type="text" class="form-control form-control-user" id="nama" name="nama_sundari" placeholder="Nama">
                             <div class="invalid-feedback">
                                 <?php echo form_error('nama');?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                            <input type="password" class="form-control form-control-user" id="password" name="password_sundari" placeholder="Password">
                             <div class="invalid-feedback">
                                 <?php echo form_error('password');?>
                             </div>

@@ -37,6 +37,7 @@
                                         <td><?php echo $u->stok ?></td>
                                         <td><?php echo $u->harga ?></td>
                                         <td>
+                                        <?php echo anchor('admin/TambahStok/index/'.$u->id_menu, "Tambah Stok"); ?>
                                         <?php echo anchor('admin/UbahMenu/ubah/'.$u->id_menu,'Edit'); ?>
                                         <?php echo anchor('admin/HapusMenu/index/'.$u->id_menu,'Hapus'); ?>
                                         </td>
