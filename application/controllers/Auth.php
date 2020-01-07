@@ -43,6 +43,7 @@ class Auth extends CI_Controller
             // Ambil data dari database
             $row = $this->ModelAuth->getDataByNama($nama);
             foreach ($row as $r) {
+                $getId = $r->id_user;
                 $getNama = $r->nama;
                 $getPassword = $r->password;
                 $getHakAkses = $r->hak_akses;
@@ -57,6 +58,7 @@ class Auth extends CI_Controller
                     // Buat inisiasi session login
                     // $data_login = "Hello";
                     $data_login = array(
+                        "id_user" => $getId,
                         "nama" => $nama,
                         "status" => "login"
                     );

@@ -30,7 +30,7 @@
                         </div>
 
                         <input class="btn btn-success" type="submit" value="Tambah">
-                        <a class="btn btn-back" href="<?php echo base_url('admin/TambahUser'); ?>">Batal</a>
+                        <a class="btn btn-back" href="<?php echo base_url('admin/User'); ?>">Batal</a>
                 </form>
             </div>
         </div>

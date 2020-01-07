@@ -27,6 +27,11 @@ class ModelTransaksi extends CI_Model {
 		$this->db->update($this->table, $transaksi);
 	}
 
+	function kurangiStokMenu($id_menu, $jumlah){
+		// Update kurangi
+		$this->db->query("UPDATE menu SET stok=stok-". $jumlah. " WHERE id_menu='". $id_menu. "'");
+	}
+
 	function getLastTransaksi(){
 		$last = null;
 		$trans = $this->getTransaksi()->result();
@@ -81,17 +86,23 @@ class ModelTransaksi extends CI_Model {
 		$this->session->set_userdata($this->sess_beli, $tmp);
 	}
 
-	function updateData($noBeli, $idmenu, $jumlahBeli, $harga, $namaMenu){
+	function updateData($noBeli, $jumlahBeli){
 		/*
 		TODO updatedata
 		1. Get id atau $no
 		2. Search index
-		3. datalist[index] = array(new_data)
+		3. datalist[index] = array(data)
 		4. save to session
 		*/
 		$tmp = $this->session->userdata($this->sess_beli);
-		$id = $this->getIndex($no);
-		$tmp[$id] = array("noBeli" => $noBeli, "idMenu" => $idMenu, "namaMenu" => $namaMenu, "jumlahBeli" => $jumlahBeli, "harga" => $harga, "subHarga" => ($jumlahBeli * $harga));
+		$id = $this->getIndex($noBeli);
+
+		// Ambil data lama
+		$old = $tmp[$id];
+		$row = array("noBeli" => $noBeli, "idMenu" => $old['idMenu'], "namaMenu" => $old['namaMenu'], "jumlahBeli" => $jumlahBeli, "harga" => $old['harga'], "subHarga" => ($jumlahBeli * $old['harga']));
+
+		// Kembalikan ke data asal
+		$tmp[$id] = $row;
 		// Simpan kembali ke session
 		$this->session->set_userdata($this->sess_beli, $tmp);
 	}

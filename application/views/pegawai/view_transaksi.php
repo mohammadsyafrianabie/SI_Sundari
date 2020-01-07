@@ -55,25 +55,25 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="bodyTabelBeli">
                             <?php 
                             $total_biaya = 0;
-                            $beli = $this->session->userdata('data_beli');
+                            $no = 1;
+                            $beli = $this->session->userdata("data_beli");
                             if (is_array($beli)){
                             foreach ($beli as $b){
                             ?>
                             <tr>
-                                <td><?php echo $b["noBeli"]; ?></td>
+                                <td><?php echo $no; ?></td>
                                 <td><?php echo $b["namaMenu"]; ?></td>
                                 <td><?php echo $b["jumlahBeli"];?></td>
                                 <td><?php echo $b["subHarga"]; $total_biaya = $total_biaya + $b["subHarga"]; ?></td>
                                 <td>
-                                    <?php echo anchor('pegawai/Transaksi/updateRow/'. $b["noBeli"],'Edit'); ?>
+                                    <a href="javascript:;" class="linkUbahBeli" data="<?php echo $b['noBeli']; ?>">Ubah Jumlah</a>
                                     <?php echo anchor('pegawai/Transaksi/deleteRow/'. $b["noBeli"],'Hapus'); ?>
                                 </td>
                             </tr>
-                            <?php 
-                            }} ?>
+                            <?php $no++;} } ?>
                         </tbody>
                     </table>
                 </div>
@@ -82,7 +82,7 @@
                         <b>TOTAL BIAYA: </b><input class="form-control" type="text" id="total_biaya" value="<?php echo $total_biaya; ?>" readonly>
                         <b>BAYAR: </b><input class="form-control" type="number" name="bayar" id="bayar" value="0">
                         <b>KEMBALIAN: </b><input class="form-control" type="text" id="kembalian" value="0" readonly>
-                        <input class="btn btn-success" type="submit" id="bayarkan" name="bayarkan" value="Bayarkan">
+                        <input class="btn btn-success" style="width: 100%; margin-top: 10px;" type="submit" id="bayarkan" name="bayarkan" value="Bayarkan">
                     </form>
                 </div>
             </div>
@@ -90,17 +90,48 @@
 
     </div>
 
+    <div class="modal fade" id="modalUbahJumlah" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" action="<?php echo base_url('pegawai/Transaksi/updateRow')?>" method="POST">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ubah Jumlah</h3>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="no_beli" id="no_beli">
+                    
+                    <div class="form-group">
+                        <label for="nama_menu">Nama Menu</label>
+                        <input class="form-control" type="text" name="nama_menu" id="nama_menu" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah_ubah">Jumlah Beli</label>
+                        <input class="form-control" type="number" name="jumlah_ubah" id="jumlah_ubah" value=0>
+                    </div>
+                    <!-- <input type="hidden" name="harga_menu" id="harga_menu"> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="tombol_ubahBeli" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <?php $this->load->view("_partials/footer"); ?>
     <script type="text/javascript">
         $(document).ready(function () {
             konfirmasiTambahRow();
+            konfirmasiUbahRow();
             konfirmasiBayar();
 
             $("#id_menu").select2({
                 placeholder: "Please Select"
             });
+            // Untuk menampilkan harga menu
             $("#id_menu").on("select2:select", function(){
                 var idmenu = $("#id_menu").val();
+
+                // jika tidak ada/pilih null yg dipilih harga = 0
                 if(idmenu == ""){
                     $("#harga").val(0);
                 }else{
@@ -116,11 +147,36 @@
                 konfirmasiTambahRow();
             });
 
+            // Untuk event ubah jumlah pembelian
+            $("#bodyTabelBeli").on("click", ".linkUbahBeli", function(){
+                var this_id = $(this).attr("data");
+
+                $.ajax({
+                    type: "GET",
+                    url: "<?php echo base_url('pegawai/Transaksi/getJumlahBeli'); ?>",
+                    dataType: "JSON",
+                    data: {id:this_id},
+                    success: function(data){
+                        $.each(data, function(namaMenu, jumlahBeli, harga){
+                            $("#modalUbahJumlah").modal('show');
+                            $("#no_beli").val(this_id);
+                            $("#nama_menu").val(data.namaMenu);
+                            $("#jumlah_ubah").val(data.jumlahBeli);
+                            $("#harga_menu").val(data.harga);
+                            konfirmasiUbahRow();
+                        });
+                    }
+                });
+            });
+
             $("#jumlah_beli").change(function(){notNeg("jumlah_beli")});
             $("#jumlah_beli").keyup(function(){notNeg("jumlah_beli")});
 
             $("#bayar").change(function(){notNeg("bayar")});
             $("#bayar").keyup(function(){notNeg("bayar")});
+
+            $("#jumlah_ubah").change(function(){notNeg("jumlah_ubah")});
+            $("#jumlah_ubah").keyup(function(){notNeg("jumlah_ubah")});
         });
 
         function notNeg(selector){
@@ -144,15 +200,15 @@
 
         function konfirmasiUbahRow(){
             if($("#jumlah_ubah").val() > 0 ){
-                //TODO enable tombol ubah
+                $("#tombol_ubahBeli").prop("disabled", false);
             }else{
-                //TODO disable tombol ubah
+                $("#tombol_ubahBeli").prop("disabled", true);
             }
         }
 
         function konfirmasiBayar(){
-            $("#kembalian").val($("#bayar").val() - $("#total_biaya").val());
-            if($("#kembalian").val() >= 0 && $("#bayar").val() != 0){
+            $("#kembalian").val( $("#bayar").val() - $("#total_biaya").val() );
+            if($("#kembalian").val() >= 0 && $("#total_biaya").val() != 0){
                 $("#bayarkan").prop("disabled", false);
             }else{
                 $("#bayarkan").prop("disabled", true);

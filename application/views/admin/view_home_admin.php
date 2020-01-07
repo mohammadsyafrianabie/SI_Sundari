@@ -15,12 +15,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">  SELAMAT DATANG DI RUMAH MAKAN SUNDARI </h1>
+                        <h1 class="page-header">  SELAMAT DATANG DI SI RUMAH MAKAN SUNDARI </h1>
                         <div class="card-body">
                             <h3>Selamat Bekerja !</h3> 
-                            <p>Gunakan sistem ini untuk kepentingan transaksi dan mengelola website ini.</p> 
-                            <p>Tingkatkan omzet dengan memperbanyak stok menu.</p>
-                            <p>-Admin-</p>
+                            <p>Halaman ini digunakan untuk menambahkan stok, mengelola menu, dan pegawai.</p> 
+                            <p>Laporan transaksi disajikan per hari, per bulan dan per tahun.</p>
                         </div>
                     </div>
                 </div>
