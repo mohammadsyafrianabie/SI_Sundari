@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="http://localhost/SI_Sundari/pegawai/Menu">
                                 <div class="panel-footer">
                                     <span class="pull-left">Menuju Menu</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="http://localhost/SI_Sundari/pegawai/Transaksi">
                                 <div class="panel-footer">
                                     <span class="pull-left">Menuju Transaksi</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
