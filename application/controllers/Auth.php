@@ -82,14 +82,21 @@ class Auth extends CI_Controller
                     }
 
                 }else{
-                    echo "<script>alert('Password salah')</script>";
-                    redirect('Auth');
+                    ?>
+                    <script type="text/javascript">
+                        alert("Password salah");
+                        window.location.href = "<?php echo base_url('Auth'); ?>";
+                    </script>
+                    <?php
                 }
 
             }else{
-                echo "<script>alert('Username tidak ditemukan')</script>";
-                redirect('Auth');
-
+                ?>
+                <script type="text/javascript">
+                    alert("Username tidak ditemukan");
+                    window.location.href = "<?php echo base_url('Auth'); ?>";
+                </script>
+                <?php
             }
     	}
     }

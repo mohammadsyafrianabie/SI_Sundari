@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
-                        <input class="form-control <?php echo form_error('tanggal') ? 'is-invalid' : '' ?>" type="text" name="tanggal" id="tanggal" value="<?php echo date('Y-m-d H:m:s');?>" readonly>
+                        <input class="form-control <?php echo form_error('tanggal') ? 'is-invalid' : '' ?>" type="text" name="tanggal" id="tanggal" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('Y-m-d H:m:s');?>" readonly>
                         <div class="invalid-feedback">
                             <?php echo form_error('tanggal'); ?>
                         </div>

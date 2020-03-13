@@ -79,7 +79,15 @@ class Transaksi extends CI_Controller {
 					window.location.href = "<?php echo base_url("pegawai/Transaksi"); ?>";
 				</script>
 			<?php
-		}elseif($this->getStokMenu($my_idMenu) < $my_jumlahBeli){
+		}elseif($this->getStokMenu($my_idMenu) == 0){
+			?>
+				<script>
+					alert("Stok habis"); 
+					window.location.href = "<?php echo base_url("pegawai/Transaksi"); ?>";
+				</script>
+			<?php
+		}
+		elseif($this->getStokMenu($my_idMenu) < $my_jumlahBeli){
 			// Cek persediaan dan Isi session
 			?>
 				<script>
@@ -99,7 +107,29 @@ class Transaksi extends CI_Controller {
 		$my_jumlahUbah = $this->input->post("jumlah_ubah");
 		// $my_harga = $this->input->post("harga_menu");
 		
-		$this->ModelTransaksi->updateData($my_noBeli, $my_jumlahUbah);
+		// Get index menu
+		$index = $this->ModelTransaksi->getIndex($my_noBeli);
+		// Get array data (data_beli)
+		$row = $this->session->userdata("data_beli")[$index];
+		// Cek stok
+		if($this->getStokMenu($row["idMenu"]) == 0){
+			?>
+				<script>
+					alert("Stok habis"); 
+					window.location.href = "<?php echo base_url("pegawai/Transaksi"); ?>";
+				</script>
+			<?php
+		}
+		elseif($this->getStokMenu($row["idMenu"]) < $my_jumlahUbah){
+			?>
+				<script>
+					alert("Stok kurang dari <?php echo $my_jumlahUbah; ?>"); 
+					window.location.href = "<?php echo base_url("pegawai/Transaksi"); ?>";
+				</script>
+			<?php
+		}else{
+			$this->ModelTransaksi->updateData($my_noBeli, $my_jumlahUbah);
+		}
 		redirect(base_url("pegawai/Transaksi"));
 	}
 
@@ -112,6 +142,7 @@ class Transaksi extends CI_Controller {
 		// Simpan kedalam database
 		$bayar = $this->input->post("bayar");
 
+		date_default_timezone_set('Asia/Jakarta');
 		$tgl = date('Y-m-d H:m:s');
 		$idBaru = "t". date("YmdHms");
 		$no = 1;

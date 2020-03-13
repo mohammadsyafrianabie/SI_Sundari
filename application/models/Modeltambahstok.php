@@ -16,14 +16,15 @@ class Modeltambahstok extends CI_Model{
 
 	function getLastId(){
 		$rows = $this->db->get($this->table)->result();
-		$tmp = "";
+		$tmp = null;
 		foreach ($rows as $rw) {
 			// Harus diubah
 			$tmp = $rw->id_stok;
 		}
 		if (is_null($tmp)) {
 			// Harus diubah
-			return $tmp = "s000";
+			$tmp = "s000";
+			return $tmp;
 		}else{
 			return $tmp;
 		}
