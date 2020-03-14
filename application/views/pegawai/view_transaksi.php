@@ -25,8 +25,8 @@
                                 <label for="id_menu">Nama Menu</label>
                                 <select class="form-control" id="id_menu" name="id_menu">
                                     <option value="">--Please Select--</option>
-                                    <?php foreach ($lookMenu as $lm){ ?>
-                                    <option value="<?php echo $lm->id_menu; ?>"><?php echo $lm->nama; ?></option>
+                                    <?php foreach ($lookMenu as $lm) { ?>
+                                        <option value="<?php echo $lm->id_menu; ?>"><?php echo $lm->nama; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="jumlah_beli">Jumlah Beli</label>
-                                <input class="form-control" type="number" name="jumlah_beli" id="jumlah_beli" value="0">
+                                <input class="form-control" type="number" name="jumlah_beli" id="jumlah_beli" value="">
                             </div>
                             <div class="col-md-3" style="margin-top: 25px;">
                                 <button class="btn btn-primary" type="submit" id="tambahkan" name="tambahkan">Tambahkan</button>
@@ -56,31 +56,35 @@
                             </tr>
                         </thead>
                         <tbody id="bodyTabelBeli">
-                            <?php 
+                            <?php
                             $total_biaya = 0;
                             $no = 1;
                             $beli = $this->session->userdata("data_beli");
-                            if (is_array($beli)){
-                            foreach ($beli as $b){
-                            ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $b["namaMenu"]; ?></td>
-                                <td><?php echo $b["jumlahBeli"];?></td>
-                                <td><?php echo $b["subHarga"]; $total_biaya = $total_biaya + $b["subHarga"]; ?></td>
-                                <td>
-                                    <a href="javascript:;" class="linkUbahBeli" data="<?php echo $b['noBeli']; ?>">Ubah Jumlah</a>
-                                    <?php echo anchor('pegawai/Transaksi/deleteRow/'. $b["noBeli"],'Hapus'); ?>
-                                </td>
-                            </tr>
-                            <?php $no++;} } ?>
+                            if (is_array($beli)) {
+                                foreach ($beli as $b) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $no; ?></td>
+                                        <td><?php echo $b["namaMenu"]; ?></td>
+                                        <td><?php echo $b["jumlahBeli"]; ?></td>
+                                        <td><?php echo $b["subHarga"];
+                                                    $total_biaya = $total_biaya + $b["subHarga"]; ?></td>
+                                        <td>
+                                            <a href="javascript:;" class="linkUbahBeli" data="<?php echo $b['noBeli']; ?>">Ubah Jumlah</a>
+                                            <?php echo anchor('pegawai/Transaksi/deleteRow/' . $b["noBeli"], 'Hapus'); ?>
+                                        </td>
+                                    </tr>
+                            <?php $no++;
+                                }
+                            } ?>
                         </tbody>
                     </table>
                 </div>
                 <div class="row">
                     <form class="col-md-3 col-md-offset-8" method="POST" action="<?php echo base_url('pegawai/Transaksi/save'); ?>">
+                        <b>NAMA PEMBELI: </b><input class="form-control" type="text" name="namaPembeli" id="namaPembeli" value="">
                         <b>TOTAL BIAYA: </b><input class="form-control" type="text" id="total_biaya" value="<?php echo $total_biaya; ?>" readonly>
-                        <b>BAYAR: </b><input class="form-control" type="number" name="bayar" id="bayar" value="0">
+                        <b>BAYAR: </b><input class="form-control" type="number" name="bayar" id="bayar" value="">
                         <b>KEMBALIAN: </b><input class="form-control" type="text" id="kembalian" value="0" readonly>
                         <input class="btn btn-success" style="width: 100%; margin-top: 10px;" type="submit" id="bayarkan" name="bayarkan" value="Bayarkan">
                     </form>
@@ -92,13 +96,13 @@
 
     <div class="modal fade" id="modalUbahJumlah" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
-            <form class="modal-content" action="<?php echo base_url('pegawai/Transaksi/updateRow')?>" method="POST">
+            <form class="modal-content" action="<?php echo base_url('pegawai/Transaksi/updateRow') ?>" method="POST">
                 <div class="modal-header">
                     <h3 class="modal-title">Ubah Jumlah</h3>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="no_beli" id="no_beli">
-                    
+
                     <div class="form-group">
                         <label for="nama_menu">Nama Menu</label>
                         <input class="form-control" type="text" name="nama_menu" id="nama_menu" readonly>
@@ -119,7 +123,7 @@
 
     <?php $this->load->view("_partials/footer"); ?>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             konfirmasiTambahRow();
             konfirmasiUbahRow();
             konfirmasiBayar();
@@ -128,18 +132,20 @@
                 placeholder: "Please Select"
             });
             // Untuk menampilkan harga menu
-            $("#id_menu").on("select2:select", function(){
+            $("#id_menu").on("select2:select", function() {
                 var idmenu = $("#id_menu").val();
 
                 // jika tidak ada/pilih null yg dipilih harga = 0
-                if(idmenu == ""){
+                if (idmenu == "") {
                     $("#harga").val(0);
-                }else{
+                } else {
                     $.ajax({
-                        type : "GET",
-                        url : "<?php echo base_url('pegawai/Transaksi/getHargaMenu'); ?>",
-                        data: {id: idmenu},
-                        success : function(data){
+                        type: "GET",
+                        url: "<?php echo base_url('pegawai/Transaksi/getHargaMenu'); ?>",
+                        data: {
+                            id: idmenu
+                        },
+                        success: function(data) {
                             $("#harga").val(data);
                         }
                     });
@@ -148,16 +154,18 @@
             });
 
             // Untuk event ubah jumlah pembelian
-            $("#bodyTabelBeli").on("click", ".linkUbahBeli", function(){
+            $("#bodyTabelBeli").on("click", ".linkUbahBeli", function() {
                 var this_id = $(this).attr("data");
 
                 $.ajax({
                     type: "GET",
                     url: "<?php echo base_url('pegawai/Transaksi/getJumlahBeli'); ?>",
                     dataType: "JSON",
-                    data: {id:this_id},
-                    success: function(data){
-                        $.each(data, function(namaMenu, jumlahBeli, harga){
+                    data: {
+                        id: this_id
+                    },
+                    success: function(data) {
+                        $.each(data, function(namaMenu, jumlahBeli, harga) {
                             $("#modalUbahJumlah").modal('show');
                             $("#no_beli").val(this_id);
                             $("#nama_menu").val(data.namaMenu);
@@ -169,48 +177,66 @@
                 });
             });
 
-            $("#jumlah_beli").change(function(){notNeg("jumlah_beli")});
-            $("#jumlah_beli").keyup(function(){notNeg("jumlah_beli")});
+            $("#jumlah_beli").change(function() {
+                notNeg("jumlah_beli")
+            });
+            $("#jumlah_beli").keyup(function() {
+                notNeg("jumlah_beli")
+            });
 
-            $("#bayar").change(function(){notNeg("bayar")});
-            $("#bayar").keyup(function(){notNeg("bayar")});
+            $("#bayar").change(function() {
+                notNeg("bayar")
+            });
+            $("#bayar").keyup(function() {
+                notNeg("bayar")
+            });
 
-            $("#jumlah_ubah").change(function(){notNeg("jumlah_ubah")});
-            $("#jumlah_ubah").keyup(function(){notNeg("jumlah_ubah")});
+            $("#jumlah_ubah").change(function() {
+                notNeg("jumlah_ubah")
+            });
+            $("#jumlah_ubah").keyup(function() {
+                notNeg("jumlah_ubah")
+            });
         });
 
-        function notNeg(selector){
-            if($("#"+selector).val() < 0){
-                $("#"+selector).val(0);
+        function notNeg(selector) {
+            if ($("#" + selector).val() < 0) {
+                $("#" + selector).val(0);
             }
-            switch(selector){
-                case "jumlah_beli": konfirmasiTambahRow(); break;
-                case "jumlah_ubah": konfirmasiUbahRow(); break;
-                case "bayar": konfirmasiBayar(); break;
+            switch (selector) {
+                case "jumlah_beli":
+                    konfirmasiTambahRow();
+                    break;
+                case "jumlah_ubah":
+                    konfirmasiUbahRow();
+                    break;
+                case "bayar":
+                    konfirmasiBayar();
+                    break;
             }
         }
 
-        function konfirmasiTambahRow(){
-            if($("#id_menu").val() != "" && $("#jumlah_beli").val() > 0){
+        function konfirmasiTambahRow() {
+            if ($("#id_menu").val() != "" && $("#jumlah_beli").val() > 0) {
                 $("#tambahkan").prop("disabled", false);
-            }else{
+            } else {
                 $("#tambahkan").prop("disabled", true);
             }
         }
 
-        function konfirmasiUbahRow(){
-            if($("#jumlah_ubah").val() > 0 ){
+        function konfirmasiUbahRow() {
+            if ($("#jumlah_ubah").val() > 0) {
                 $("#tombol_ubahBeli").prop("disabled", false);
-            }else{
+            } else {
                 $("#tombol_ubahBeli").prop("disabled", true);
             }
         }
 
-        function konfirmasiBayar(){
-            $("#kembalian").val( $("#bayar").val() - $("#total_biaya").val() );
-            if($("#kembalian").val() >= 0 && $("#total_biaya").val() != 0){
+        function konfirmasiBayar() {
+            $("#kembalian").val($("#bayar").val() - $("#total_biaya").val());
+            if ($("#kembalian").val() >= 0 && $("#total_biaya").val() != 0) {
                 $("#bayarkan").prop("disabled", false);
-            }else{
+            } else {
                 $("#bayarkan").prop("disabled", true);
             }
         }

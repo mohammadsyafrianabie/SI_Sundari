@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title>Nota</title>
 	<style type="text/css">
@@ -8,11 +9,13 @@
 			size: 10pt;
 			color: black;
 		}
-		.wrapper{
+
+		.wrapper {
 			width: 5cm;
 		}
 	</style>
 </head>
+
 <body>
 	<div class="wrapper">
 		<div class="header">
@@ -25,6 +28,10 @@
 					<td colspan="2"><?php echo $this->session->userdata("nama"); ?></td>
 				</tr>
 				<tr>
+					<td>Nama Pembeli:</td>
+					<td colspan="2"><?php echo $this->input->post("namaPembeli"); ?></td>
+				</tr>
+				<tr>
 					<td>Tanggal: </td>
 					<td colspan="2"><?php echo $tanggal; ?></td>
 				</tr>
@@ -32,14 +39,14 @@
 				$dbeli = $this->session->userdata("data_beli");
 				$total = 0;
 				foreach ($dbeli as $b) {
-				?>
-				<tr>
-					<td><?php echo $b["namaMenu"]; ?></td>
-					<td><?php echo "x". $b["jumlahBeli"]; ?></td>
-					<td><?php echo $b["harga"]; ?></td>
-				</tr>
-				<?php 
-				$total = $total + $b["subHarga"];
+					?>
+					<tr>
+						<td><?php echo $b["namaMenu"]; ?></td>
+						<td><?php echo "x" . $b["jumlahBeli"]; ?></td>
+						<td><?php echo $b["harga"]; ?></td>
+					</tr>
+				<?php
+					$total = $total + $b["subHarga"];
 				}
 				?>
 				<tr>
@@ -64,18 +71,17 @@
 	<?php $this->session->set_userdata("data_beli", array()); ?>
 	<script type="text/javascript" src="<?php echo base_url('assets/vendor/jquery/jquery-3.3.1.min.js'); ?>"></script>
 	<script type="text/javascript">
-
-		window.onafterprint = function(e){
+		window.onafterprint = function(e) {
 			$(window).off('mousemove', window.onafterprint);
 			window.location.href = '<?php echo base_url("pegawai/Transaksi"); ?>';
 		};
 
 		window.print();
 
-		setTimeout(function(){
+		setTimeout(function() {
 			$(window).on('mousemove', window.onafterprint);
 		}, 1);
-
 	</script>
 </body>
+
 </html>
