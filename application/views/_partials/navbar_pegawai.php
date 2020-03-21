@@ -40,6 +40,9 @@
                         <li class="<?php if($formname == 'menu') echo 'active';?>">
                             <a href="<?php echo base_url('pegawai/Menu');?>"><i class="fa fa-tasks fa-fw"></i> Lihat Menu</a>
                         </li>
+                        <li class="<?php if($formname == 'laporan') echo 'active';?>">
+                            <a href="<?php echo base_url('pegawai/Laporan');?>"><i class="fa fa-tasks fa-fw"></i> Laporan</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
