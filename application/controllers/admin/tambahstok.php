@@ -12,18 +12,20 @@ class Tambahstok extends CI_Controller{
 		// $id untuk menu yang dipilih
 		$data["title"] = "Tambah Stok";
 		$data["id_menu"] = $id;
-		$data["id_stok"] = $this->trimming();
+		$data["id_stok"] = $this->buatIdBaru();
 		$this->load->view("admin/view_tambahstok", $data);
 	}
 
-	public function trimming(){
-		$last_id = $this->Modeltambahstok->getLastId();
-		$len = strlen($last_id);
-		$get_left = substr($last_id, 0, 1);
-		$get_right = substr($last_id, 1, $len);
-		$new_number = intval($get_right) + 1;
-		$new_id = $get_left. sprintf("%03d", $new_number);
-		return $new_id;
+	public function buatIdBaru(){
+		date_default_timezone_set('Asia/Jakarta');
+		$idBaru = "s". date("YmdHms");
+		// $last_id = $this->Modeltambahstok->getLastId();
+		// $len = strlen($last_id);
+		// $get_left = substr($last_id, 0, 1);
+		// $get_right = substr($last_id, 1, $len);
+		// $new_number = intval($get_right) + 1;
+		// $new_id = $get_left. sprintf("%03d", $new_number);
+		return $idBaru;
 	}
 
 	public function confirm(){
