@@ -141,6 +141,8 @@ class Transaksi extends CI_Controller {
 	public function save(){
 		// Simpan kedalam database
 		$bayar = $this->input->post("bayar");
+		$nama = $this->input->post("namaPembeli");
+		$jenis = $this->input->post("jenis");
 
 		date_default_timezone_set('Asia/Jakarta');
 		$tgl = date('Y-m-d H:m:s');
@@ -154,10 +156,11 @@ class Transaksi extends CI_Controller {
 				"id_transaksi" => $idBaru. $no,
 				"id_user" => $this->session->userdata("id_user"),
 				"id_menu" => $t["idMenu"],
-				"nama_pembeli" => "",
+				"nama_pembeli" => $nama,
 				"tanggal" => $tgl,
 				"jumlah" => $t["jumlahBeli"],
-				"subHarga" => $t["subHarga"]
+				"subHarga" => $t["subHarga"],
+				"jenis" => $jenis
 			);
 			$this->ModelTransaksi->addTransaksi($data);
 			$this->ModelTransaksi->kurangiStokMenu($t["idMenu"], $t["jumlahBeli"]);

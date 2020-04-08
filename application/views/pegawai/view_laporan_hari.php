@@ -5,56 +5,47 @@
 <body>
   <div id="wrapper">
 
-        <!-- Navigation -->
-        <?php $this->load->view("_partials/navbar_pegawai"); ?>
- <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                      <h1 class="page-header">Laporan Harian</h1>
-                         <div class="card-body">
-        <form method="post" action="<?php echo base_url('pegawai/Laporan/hari');$total_uang = 0; ?>">
+    <!-- Navigation -->
+    <?php $this->load->view("_partials/navbar_pegawai"); ?>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header">Laporan Harian</h1>
+                  <div class="card-body">
+        <form method="post" action="<?php echo base_url('pegawai/Laporan/hari');?>">
         <!-- DataTables -->
-        <div class="card mb-3">
-          <div class="card-header">
-             <select id="hari" name="hari" required="required">Pilih Bulan
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
-              <option value="08">08</option>
-              <option value="09">09</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
+            <select id="hari" name="hari" required="required">
+              <option value="">Pilih Hari</option>
+              <?php
+              for ($i = 1; $i <= 30; $i++){
+              ?>
+              <option value="<?php echo $i;?>" <?php if(isset($hari) && $hari==$i) echo "selected";?> ><?php echo $i;?></option>
+              <?php } ?>
             </select>
-            <select id="bulan" name="bulan" required="required">Pilih Bulan
-              <option value="01">Januari</option>
-              <option value="02">Februari</option>
-              <option value="03">Maret</option>
-              <option value="04">April</option>
-              <option value="05">Mei</option>
-              <option value="06">Juni</option>
-              <option value="07">Juli</option>
-              <option value="08">Agustus</option>
-              <option value="09">September</option>
-              <option value="10">Oktober</option>
-              <option value="11">November</option>
-              <option value="12">Desember</option>
+            <select id="bulan" name="bulan" required="required">
+              <option value="">Pilih Bulan</option>
+              <?php
+              $array_bln = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+              for($j = 1; $j <= 12; $j++){
+              ?>
+              <option value="<?php echo $j;?>" <?php if(isset($bulan) && $bulan==$j) echo "selected";?> ><?php echo $array_bln[$j];?></option>
+              <?php } ?>
             </select>
-            <select id="tahun" name="tahun" required="required">Pilih Tahun
+            <select id="tahun" name="tahun" required="required">
+              <option value="">Pilih Tahun</option>
               <?php foreach ($transaksi as $key) {
               ?>
-              <option value="<?php echo $key->tgl ?>"><?php echo $key->tgl ?></option>
-              <?php } ?>              
-              
+              <option value="<?php echo $key->tgl; ?>" <?php if(isset($tahun) && $tahun==$key->tgl) echo "selected";?> ><?php echo $key->tgl ?></option>
+              <?php } ?>
             </select>
-            <button>FILTER</button>           
+            <!-- <select name="jenis" required="required">
+              <option value="">Pilih Jenis</option>
+              <option value="tunai" <?php if(isset($jenis) && $jenis=="tunai") echo "selected";?> >Tunai</option>
+              <option value="tunda" <?php if(isset($jenis) && $jenis=="tunda") echo "selected";?> >Tunda</option>
+            </select> -->
+            <button class="btn btn-secondary" type="submit" name="filter">Filter</button>
+            <button class="btn btn-secondary" type="submit" name="cetak">Cetak</button>
       </form>
           </div>
           <div class="card-body">
@@ -69,11 +60,16 @@
                     <th>JUMLAH</th>
                     <th>SUB HARGA</th>
                     <th>TANGGAL</th>
-                    
+                    <th>JENIS</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($laporan as $key) { ?>
+                  <?php 
+                  $total_uang = 0;
+                  $total_tunai = 0;
+                  $total_tunda = 0;
+                  foreach ($laporan as $key) {
+                  ?>
                   <tr>
                     <td>
                       <?php echo $key->id_transaksi; ?>
@@ -88,26 +84,32 @@
                       <?php echo $key->jumlah; ?>
                     </td>
                     <td>
-                      <?php echo $key->subharga; $total_uang = $total_uang + $key->subharga; ?>
+                      <?php echo $key->subharga;
+                      $total_uang = $total_uang + $key->subharga;
+                      if($key->jenis=="tunai"){$total_tunai = $total_tunai + $key->subharga;}
+                      else{$total_tunda = $total_tunda + $key->subharga;}
+                      ?>
                     </td>
                     <td>
                       <?php echo $key->tanggal; ?>
                     </td>
-                    
+                    <td>
+                      <?php echo $key->jenis; ?>
+                    </td>
                   </tr>
                   <?php } ?>
                   <tr> <td> Grand Total <?php echo "Rp.". $total_uang; ?> </td> </tr>
-
-
+                  <tr> <td> Total Tunai <?php echo "Rp.". $total_tunai; ?> </td> </tr>
+                  <tr> <td> Total Tunda <?php echo "Rp.". $total_tunda; ?> </td> </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-</div>
-
     </div>
+
+  </div>
 
 
   <?php $this->load->view("_partials/footer"); ?>

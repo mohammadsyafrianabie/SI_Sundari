@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="jumlah_beli">Jumlah Beli</label>
-                                <input class="form-control" type="number" name="jumlah_beli" id="jumlah_beli" value="">
+                                <input class="form-control" type="number" name="jumlah_beli" id="jumlah_beli" value="0">
                             </div>
                             <div class="col-md-3" style="margin-top: 25px;">
                                 <button class="btn btn-primary" type="submit" id="tambahkan" name="tambahkan">Tambahkan</button>
@@ -84,8 +84,13 @@
                     <form class="col-md-3 col-md-offset-8" method="POST" action="<?php echo base_url('pegawai/Transaksi/save'); ?>">
                         <b>NAMA PEMBELI: </b><input class="form-control" type="text" name="namaPembeli" id="namaPembeli" value="">
                         <b>TOTAL BIAYA: </b><input class="form-control" type="text" id="total_biaya" value="<?php echo $total_biaya; ?>" readonly>
-                        <b>BAYAR: </b><input class="form-control" type="number" name="bayar" id="bayar" value="">
+                        <b>BAYAR: </b><input class="form-control" type="number" name="bayar" id="bayar" value="0">
                         <b>KEMBALIAN: </b><input class="form-control" type="text" id="kembalian" value="0" readonly>
+                        <b>PEMBAYARAN: </b>
+                        <select class="form-control" name="jenis">
+                            <option style="background-color: green; color: white;" value="tunai">Tunai</option>
+                            <option style="background-color: orange; color: black;" value="tunda">Tunda</option>
+                        </select>
                         <input class="btn btn-success" style="width: 100%; margin-top: 10px;" type="submit" id="bayarkan" name="bayarkan" value="Bayarkan">
                     </form>
                 </div>

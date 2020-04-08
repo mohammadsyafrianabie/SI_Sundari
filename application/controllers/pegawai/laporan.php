@@ -27,14 +27,27 @@ class Laporan extends CI_Controller
 		$hari = $this->input->post('hari');
 		$bulan = $this->input->post('bulan');
 		$tahun = $this->input->post('tahun');
-		if ($hari == null && $bulan == null && $tahun == null){
-			$data['laporan'] = $this->ModelLaporanHari->getLaporan_transaksi();
-		} else {
+
+		if(isset($_POST["filter"])){
+			// untuk selector filter tanggal
+			$data['hari'] = $hari;
+			$data['bulan'] = $bulan;
+			$data['tahun'] = $tahun;
+			if ($hari == null && $bulan == null && $tahun == null){
+				$data['laporan'] = $this->ModelLaporanHari->getLaporan_transaksi();
+			} else {
+				$data ['laporan'] =  $this->ModelLaporanHari->getLaporan_transaksi_hari($hari,$bulan,$tahun);
+			}
+			$data['transaksi'] = $this->ModelLaporanHari->getdate_year();
+			$this->load->view('pegawai/view_laporan_hari',$data);
+		}elseif(isset($_POST["cetak"])){
+			// cetak laporan harian
 			$data ['laporan'] =  $this->ModelLaporanHari->getLaporan_transaksi_hari($hari,$bulan,$tahun);
+			$data['transaksi'] = $this->ModelLaporanHari->getdate_year();
+			$this->load->view('pegawai/view_cetak_laporan',$data);
+			// echo "halaman cetak";
 		}
-		$data['transaksi'] = $this->ModelLaporanHari->getdate_year();
-		$this->load->view('pegawai/view_laporan_hari',$data);
-	} 
+	}
 	
 }	
 ?>
